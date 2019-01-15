@@ -7,12 +7,9 @@ import os
 import time
 from splinter import Browser
 
-def init_browser():
+def scrape():
     executable_path = {"executable_path": "chromedriver"}
     browser = Browser("chrome", **executable_path, headless=False)
-
-def scrape():
-    browser = init_browser()
     mars_info={}
 
     # URL of the pages to be scraped
@@ -54,10 +51,10 @@ def scrape():
     JPLsoup = BeautifulSoup(JPLresponse.text,'lxml')
 
     # Retrieve data from JPL website
-    feat_image=JPLsoup.find('h2',class_='brand_title').text
-    JPLimg=JPLsoup.find('a',class_='button fancybox')['data-fancybox-href']
+    feat_image = JPLsoup.find('h2',class_='brand_title').text
+    JPLimg = JPLsoup.find('a',class_='button fancybox')['data-fancybox-href']
 
-    mars_info['featured_image']=JPLsoup.find('a',class_='button fancybox')['data-fancybox-href']
+    mars_info['featured_image']=("https://www.jpl.nasa.gov"+JPLimg)
 
     # Scrape Mars weather website
     # URL of the pages to be scraped
